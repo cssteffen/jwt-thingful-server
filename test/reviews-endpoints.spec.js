@@ -49,7 +49,7 @@ describe("Reviews Endpoints", function() {
       };
       return supertest(app)
         .post("/api/reviews")
-        .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
+        .set("Authorization", helpers.makeAuthHeader(testUser))
         .send(newReview)
         .expect(201)
         .expect(res => {
