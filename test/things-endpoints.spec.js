@@ -29,7 +29,7 @@ describe("Things Endpoints", function() {
   afterEach("cleanup", () => helpers.cleanTables(db));
 
   //==========
-  describe.only(`Protected endpoints`, () => {
+  describe(`Protected endpoints`, () => {
     beforeEach("insert things", () =>
       helpers.seedThingsTables(db, testUsers, testThings, testReviews)
     );
@@ -114,10 +114,12 @@ describe("Things Endpoints", function() {
         const expectedThings = testThings.map(thing =>
           helpers.makeExpectedThing(testUsers, thing, testReviews)
         );
-        return supertest(app)
-          .get("/api/things")
-          .set("Authorization", helpers.makeAuthHeader(testUsers[0]))
-          .expect(200, expectedThings);
+        return (
+          supertest(app)
+            .get("/api/things")
+            //.set("Authorization", helpers.makeAuthHeader(testUsers[0]))
+            .expect(200, expectedThings)
+        );
       });
     });
 
@@ -205,7 +207,10 @@ describe("Things Endpoints", function() {
 
   describe(`GET /api/things/:thing_id/reviews`, () => {
     context(`Given no things`, () => {
-      beforeEach(() => db.into("thingful_users").insert(testUsers));
+      beforeEach(() =>
+        //db.into("thingful_users").insert(testUsers)
+        helpers.seedUsers(db, testUsers)
+      );
 
       it(`responds with 404`, () => {
         const thingId = 123456;

@@ -22,6 +22,7 @@ describe("Reviews Endpoints", function() {
   afterEach("cleanup", () => helpers.cleanTables(db));
 
   describe(`POST /api/reviews`, () => {
+    //beforeEach(() => helpers.seedUsers(db, testUsers));
     beforeEach("insert things", () =>
       helpers.seedThingsTables(db, testUsers, testThings)
     );
@@ -38,7 +39,7 @@ describe("Reviews Endpoints", function() {
     });
 
     it(`creates an review, responding with 201 and the new review`, function() {
-      this.retries(3);
+      //this.retries(3);
       const testThing = testThings[0];
       const testUser = testUsers[0];
       const newReview = {
